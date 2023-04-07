@@ -7,6 +7,7 @@ import (
 	"net"
 	"os"
 	"strings"
+	"time"
 )
 
 func main() {
@@ -14,21 +15,17 @@ func main() {
 	listener, err := net.Listen("tcp", ":5200")
 
 	if err != nil {
-		fmt.Println("Something went wrong")
-	}
-
-	fmt.Println("Listening for connection")
-
-	if err != nil {
 		fmt.Println("Nope")
 	} else {
+		fmt.Println("Listening for connection")
 		conn, _ := listener.Accept()
-		fmt.Println(conn)
-		target_communication(conn)
+
+		target_communication(conn, listener)
 	}
 }
 
-func target_communication(conn net.Conn) {
+func target_communication(conn net.Conn, listener net.Listener) {
+
 	for {
 		command := ""
 
@@ -43,10 +40,28 @@ func target_communication(conn net.Conn) {
 
 		if command == "quit" {
 			break
+		} else if len(command) >= 8 && command[:8] == "download" {
+			download_file(command[9:], conn)
+			fmt.Println("Download complete re-establish connection")
+			conn.Close()
+
+			fmt.Println("Re-establish connection after Download")
+			conn, _ = listener.Accept()
+
+		} else if len(command) >= 6 && command[:6] == "upload" {
+			upload_file(command[7:], conn)
+			fmt.Println("Download complete re-establish connection")
+			conn.Close()
+
+			fmt.Println("Re-establish connection after Download")
+			conn, _ = listener.Accept()
+
 		}
+
 		receive_data(conn)
 
 	}
+
 }
 
 func send_data(command string, conn net.Conn) {
@@ -71,3 +86,46 @@ func receive_data(conn net.Conn) {
 	fmt.Println()
 }
 
+func download_file(download string, conn net.Conn) {
+	var buffer []byte = make([]byte, 1024)
+	conn.SetReadDeadline(time.Now().Add(1 * time.Second))
+	file, err := os.Create(download)
+
+	if err != nil {
+		panic(err)
+	}
+
+	for {
+
+		cargo, err1 := conn.Read(buffer)
+
+		file.Write([]byte(buffer[:cargo]))
+
+		if err1 != nil {
+			{
+				fmt.Println("EOF")
+				break
+			}
+		}
+
+	}
+
+	file.Close()
+
+}
+
+func upload_file(command string, conn net.Conn) {
+	var buffer []byte = make([]byte, 1024)
+	file, _ := os.Open(command)
+
+	for {
+		cargo, err := file.Read(buffer)
+
+		conn.Write([]byte(buffer[:cargo]))
+		if err != nil {
+			fmt.Println("EOF")
+			break
+		}
+	}
+	file.Close()
+}
