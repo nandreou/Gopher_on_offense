@@ -27,8 +27,7 @@ func main() {
 			time.Sleep(2 * time.Second)
 		}
 
-	} else {
-	}
+	} 
 
 	shell(conn, command)
 }
