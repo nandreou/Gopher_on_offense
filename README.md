@@ -1,6 +1,6 @@
 # Gopher_on_offense
 
-This is a Repo with personal ethical hacking projects written in GO.
+This is a Repo with personal ethical hacking payload project written in GO.
 
 
         
